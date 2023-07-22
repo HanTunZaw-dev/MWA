@@ -1,0 +1,21 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <img width="40" height="50" alt="Help Heart Logo"
+    src="https://www.pngkey.com/png/full/159-1592876_28-collection-of-heart-on-fire-clipart-heart.png" />
+  <span class="banner-name">Welcome To Our Help Heart Community</span>
+  <div class="spacer"></div>
+  <div class="card-container">
+    <span *ngIf="this.auth.state_signal()._id" class="name-display"> {{this.auth.state_signal().fullname}} </span>
+    <button class="card card-small" (click)="signIn()" *ngIf="!this.auth.state_signal()._id"> Sign In </button>
+    <button class="card card-small" (click)="signout()" *ngIf="this.auth.state_signal()._id"> Sign Out </button>
+  </div>
+</div>
+
+<div class="content" role="main">
+  <router-outlet />
+
+  <!-- Footer -->
+  <footer>
+  </footer>
+
+</div>

@@ -1,0 +1,219 @@
+<section style="background-color: #eee;" *ngIf="desire">
+    <div class="container py-5">
+        <button (click)="goBack()" class="btn btn-outline-secondary btn-sm mt-1">Back</button>
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-10 col-xl-8">
+                <div class="card shadow-0 border rounded-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-9 col-lg-9 col-xl-9">
+                                <div class="mt-1 mb-0 text-muted small">
+                                    <span>{{desire.createdBy.fullname}}</span>
+                                    <span class="text-primary"> • </span>
+                                    <span>{{desire.updatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                                </div>
+                                <div>
+                                    <br>
+                                </div>
+                                <div *ngIf="isEdit">
+                                    <h3>{{desire.title}}</h3>
+
+                                    <div class="mt-1 mb-0 text-muted large d-flex flex-row">
+                                        <p>Category:</p>
+                                        <span>&nbsp;{{desire.category}}</span>
+                                    </div>
+
+                                    <h5>Description: </h5>
+                                    <hr class="hr hr-blurry" />
+                                    <p> {{desire.description}} </p>
+                                    <hr class="hr hr-blurry" />
+
+                                    <div>
+                                        <h5>Address:</h5>
+                                        <span> {{isLogged() ? desire.address : '&lt;sign in to see&gt;'}}</span>
+                                    </div>
+                                    <br>
+
+                                    <div>
+                                        <h5>Info: </h5>
+                                        <p class="mb-1 me-1"><strong>Estimate Durations:</strong>
+                                            {{desire.estimateInHours}} hrs</p>
+                                        <p class="mb-1 me-1"><strong>Number of Volunteer:</strong>
+                                            {{desire.numberOfVolunteerNeeded}}</p>
+                                        <p class="mb-1 me-1"><strong>Needed Day:</strong> {{desire.requestTime | date:
+                                            'yyyy-MM-dd'}}</p>
+                                        <p class="mb-1 me-1"><strong>Needed Time:</strong> {{desire.requestTime | date:
+                                            'HH:mm:ss'}}</p>
+                                    </div>
+                                    <br>
+
+                                    <div *ngIf="desire.volunteers?.length">
+                                        <h5>Requested Volunteer: </h5>
+                                        <table class="table align-middle mb-0 bg-white">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Name</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of desire.volunteers; index as i">
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="ms-3">
+                                                                <p class="fw-bold mb-1">{{i + 1}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="ms-3">
+                                                                <p class="fw-bold mb-1">{{item.fullname}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="ms-3">
+                                                                <p class="fw-bold mb-1">{{item.status}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button (click)="acceptVolunteer(item.userId)"
+                                                            class="btn btn-primary btn-sm m-1"
+                                                            *ngIf="canEdit() && (item.status=='Pending' || item.status=='Rejected')">Accept</button>
+                                                        <button (click)="rejectVolunteer(item.userId)"
+                                                            class="btn btn-primary btn-sm m-1"
+                                                            *ngIf="canEdit() && (item.status=='Pending' || item.status=='Accepted')">Reject</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <form class="col row-cols-lg-auto g-3 align-items-center" *ngIf="!isEdit"
+                                    [formGroup]="updateForm">
+                                    <div class="col-12" [ngClass]="{ 'invalid-control': updateForm.controls.title.invalid && updateForm.controls.title.touched }">
+                                        <label class="visually-hidden" for="inlineFormInputGroupTitle">Title</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">Title</div>
+                                            <input type="text" class="form-control" id="inlineFormInputGroupTitle"
+                                                placeholder="Title" value={{desire.title}} formControlName="title" />
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-12" [ngClass]="{ 'invalid-control': updateForm.controls.category.invalid && updateForm.controls.category.touched }">
+                                        <label class="visually-hidden"
+                                            for="inlineFormInputGroupCategory">Category</label>
+                                            <div class="input-group">
+                                              <div class="input-group-text">Category</div>
+                                              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                              aria-expanded="false">
+                                              {{selectedCategory}}
+                                            </button>&nbsp;
+
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                              <li><a a class="dropdown-item" *ngFor="let category of this.items; index as i" (click)="setCategory(category)"> {{category}}</a></li>
+                                            </ul>
+
+                                          </div>
+                                      </div>
+                                    <br>
+                                    <div class="col-12" [ngClass]="{ 'invalid-control': updateForm.controls.description.invalid && updateForm.controls.description.touched }">
+                                        <label class="visually-hidden"
+                                            for="inlineFormInputGroupDescription">Description</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">Description</div>
+                                            <textarea rows="10" class="form-control"
+                                                id="inlineFormInputGroupDescription" placeholder="Description"
+                                                value={{desire.description}} formControlName="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-12" [ngClass]="{ 'invalid-control': updateForm.controls.address.invalid && updateForm.controls.address.touched }">
+                                        <label class="visually-hidden" for="inlineFormInputGroupAddress">Address</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">Address</div>
+                                            <input type="text" class="form-control" id="inlineFormInputGroupAddress"
+                                                placeholder="Address" value={{desire.address}}
+                                                formControlName="address" />
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-12" [ngClass]="{ 'invalid-control': updateForm.controls.estimateInHours.invalid && updateForm.controls.estimateInHours.touched }">
+                                        <label class="visually-hidden" for="inlineFormInputGroupDurations">Estimate
+                                            Durations</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">Estimate Durations</div>
+                                            <input type="number" class="form-control" id="inlineFormInputGroupDurations"
+                                                placeholder="Estimate Durations" value={{desire.estimateInHours}}
+                                                formControlName="estimateInHours"
+                                                min="0"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" [ngClass]="{ 'invalid-control': updateForm.controls.numberOfVolunteerNeeded.invalid && updateForm.controls.numberOfVolunteerNeeded.touched }">
+                                        <label class="visually-hidden" for="inlineFormInputGroupNumberVolunteer">Number
+                                            of Volunteer</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">Number of Volunteer</div>
+                                            <input type="number" class="form-control"
+                                                id="inlineFormInputGroupNumberVolunteer"
+                                                placeholder="Number of Volunteer"
+                                                step="1" pattern="[0-9]*"
+                                                value={{desire.numberOfVolunteerNeeded}}
+                                                formControlName="numberOfVolunteerNeeded"
+                                                min="1" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12" [ngClass]="{ 'invalid-control': updateForm.controls.requestTime.invalid && updateForm.controls.requestTime.touched }">
+                                        <label class="visually-hidden" for="inlineFormInputGroupDate">Date &
+                                            Time</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">Date & Time</div>
+                                            <input type="datetime-local" class="form-control"
+                                                id="inlineFormInputGroupDate" placeholder="Needed Date"
+                                                [value]="formatDateTime(desire.requestTime!)"
+                                                formControlName="requestTime" />
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                </form>
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                <h6 class="text-success">Status: {{desire.status}}</h6>
+                                <div class="d-flex flex-column mt-4">
+
+                                    <button class="btn btn-primary btn-sm mt-1" type="button" (click)="saveRequest()"
+                                    [disabled]="updateForm.invalid"
+                                        *ngIf="!isEdit">Update</button>
+                                    <div *ngIf="canEdit()" class="d-flex flex-column">
+                                        <button class="btn btn-primary btn-sm mt-1" type="button" (click)="editInfo()">
+                                            <span *ngIf="!isEdit">Cancel Edit</span>
+                                            <span *ngIf="isEdit">Edit</span>
+                                        </button>
+                                    </div>
+                                    <button class="btn btn-info btn-sm mt-1" type="button" (click)="cancelRequest()"
+                                        *ngIf="isEdit && canCancelRequest()">Cancel Request</button>
+                                    <button class="btn btn-info btn-sm mt-1" (click)="closeRequest()"
+                                        *ngIf="isEdit && canCloseRequest()">Close Request</button>
+                                    <button class="btn btn-outline-danger btn-sm mt-1" (click)="deleteRequest()"
+                                        *ngIf="isEdit && canDelete()">Delete</button>
+                                    <button class="btn btn-primary btn-sm mt-1" (click)="registerRequest()"
+                                        *ngIf="canRegister()">Register</button>
+                                    <button class="btn btn-primary btn-sm mt-1" (click)="unregisterRequest()"
+                                        *ngIf="canUnRegister()">Un-register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

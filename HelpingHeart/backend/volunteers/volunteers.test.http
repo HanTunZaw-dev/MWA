@@ -1,0 +1,20 @@
+GET http://localhost:3000/desires/64b4cec810df213f92b39294
+
+###
+POST http://localhost:3000/desires/64b4cec810df213f92b39294/volunteers
+Authorization: Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0Y2YwNzEwZGYyMTNmOTJiMzkyOWEiLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1MS5lZHUiLCJmdWxsbmFtZSI6IkhhbiBUdW4gWmF3IiwiaWF0IjoxNjg5NjMyMDYzfQ.9TabJ6LZcpik63clNHbthtUTRg7siGE-qCCdasKDJ7Q
+Content-Type: application/json
+
+ {
+
+ }
+
+
+###
+PUT http://localhost:3000/desires/64b2d01b3b09b9d7fb45762f/volunteers/64b2cf87b28dcae29bd6235a
+Authorization: Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGIyY2Y4N2IyOGRjYWUyOWJkNjIzNWEiLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1LmVkdSIsImZ1bGxuYW1lIjoiSGFuIFR1biBaYXciLCJpYXQiOjE2ODk0NDAxMzh9.dAhVMM09peSa3tp05Cv0NAwIWJRDgsM-vpEQ6Y4fs30
+Content-Type: application/json
+
+ {
+   "operator": "Cancelled"
+ }

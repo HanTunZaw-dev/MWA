@@ -1,0 +1,88 @@
+<section style="background-color: #eee;">
+  <div class="container py-5">
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-2 col-xl-2">
+          <button class="btn btn-outline-primary btn-sm mt-1" (click)="newDesire()" *ngIf="isLogged()">New
+            Request</button>
+        </div>
+        <div class="col-md-8 col-xl-8 text-center">
+          <button class="btn btn-outline-secondary btn-sm mt-1" (click)="movePage(-1)" [disabled]="this.paging === 1">&lt;</button>&nbsp;
+          <button class="btn btn-outline-secondary btn-sm mt-1" (click)="movePage(1)" [disabled]="this.noNext">&gt;</button>
+        </div>
+
+        <div class="col-md-2 col-xl-2 dropdown d-flex justify-content-end" *ngIf="isLogged()">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{filteredValue}}
+          </button>&nbsp;
+          <button class="btn btn-primary" (click)="filterReset()"> Reset </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item disabled">By User:</a></li>
+            <li><a class="dropdown-item" (click)="filterBy('CreatedByUser')">&nbsp;&nbsp;&nbsp;Created By User</a></li>
+            <li><a class="dropdown-item" (click)="filterBy('RegisteredByUser')">&nbsp;&nbsp;&nbsp;Registered By User</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item disabled">Status:</a></li>
+            <li><a class="dropdown-item" (click)="filterBy('Open')">&nbsp;&nbsp;&nbsp;Open</a></li>
+            <li><a class="dropdown-item" (click)="filterBy('Cancelled')">&nbsp;&nbsp;&nbsp;Cancelled</a></li>
+            <li><a class="dropdown-item" (click)="filterBy('Closed')">&nbsp;&nbsp;&nbsp;Closed</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-3 mt-3" *ngFor="let d of desires; index as i; trackBy: trackByFn">
+        <div class="col-md-10 col-xl-8">
+          <div class="card shadow-0 border rounded-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-8 col-lg-8 col-xl-8">
+                  <div class="mt-1 mb-0 text-muted small">
+                    <span>{{d.createdBy.fullname}}</span>
+                    <span class="text-primary"> • </span>
+                    <span>{{d.updatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                  </div>
+                  <h5>{{d.title}}</h5>
+                  <p class="text-truncate mb-4 mb-md-0">
+                    {{d.category}}
+                  </p>
+                  <p class="text-truncate mb-4 mb-md-0">
+                    {{d.description}}
+                  </p>
+                  <p class="text-truncate mb-4 mb-md-0">
+                    <br>
+                  </p>
+                  <div class="d-flex flex-row" *ngIf="isLogged()">
+                    <span>{{d.address}}</span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <span class="mb-1 me-1"><strong>Estimate Durations:</strong> {{d.estimateInHours}} hrs</span>
+                  </div>
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <span class="mb-1 me-1"><strong>Number of Volunteer:</strong> {{d.numberOfVolunteerNeeded}}</span>
+                  </div>
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <span class="mb-1 me-1"><strong>Needed Day:</strong> {{d.requestTime | date: 'yyyy-MM-dd'}}</span>
+                  </div>
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <span class="mb-1 me-1"><strong>Needed Time:</strong> {{d.requestTime | date: 'HH:mm:ss'}}</span>
+                  </div>
+                  <h6 class="text-success">Status: {{d.status}}</h6>
+                  <div class="d-flex flex-column mt-4">
+                    <button class="btn btn-primary btn-sm" type="button" (click)="viewDesire(d._id)">View</button>
+                    <button class="btn btn-outline-primary btn-sm mt-2" type="button" (click)="deleteDesire(d._id)"
+                      *ngIf="canDelete(d)">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-3">
+        <div class="text-center" *ngIf="desires.length>=1">
+          <button class="btn btn-outline-secondary btn-sm mt-1" (click)="movePage(-1)" [disabled]="this.paging === 1">&lt;</button>&nbsp;
+          <button class="btn btn-outline-secondary btn-sm mt-1" (click)="movePage(1)" [disabled]="this.noNext">&gt;</button>
+        </div>
+      </div>
+    </div>
+</section>

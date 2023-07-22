@@ -1,0 +1,42 @@
+###
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+"name": {
+    "first": "Han Tun",
+    "last": "Zaw"
+  },
+  "email": "hantun.zaw@miu.edu",
+  "password": "12345678"
+}
+
+###
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{"name": {"first":"New ","last":"New "},"email":"1","password":"123456","location":[41.0149,-91.9588]}
+
+###
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "hantun.zaw@miu.edu",
+    "password": "12345678"
+}
+
+###
+PUT http://localhost:3000/auth/password
+Content-Type: application/json
+
+{
+    "email": "hantun.zaw@miu.edu", 
+    "old_password": "9876543210",
+    "new_password": "12345678"
+}
+
+###
+GET http://localhost:3000/auth/private
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGE1MTZjNmQ2NDhiM2VmODliMDQ1MTEiLCJmdWxsbmFtZSI6IkhhbiBaYXciLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1LmVkdSIsImlhdCI6MTY4ODU0MjUwN30.ilUGAUMiTyF26MemoQmFEmAy3Z5GDtJIIO8XD9alonI
+

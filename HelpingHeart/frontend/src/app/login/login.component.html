@@ -1,0 +1,26 @@
+<div class="body">
+    <div class="main">
+        <input type="checkbox" id="chk" [checked]="isCheckboxChecked" (change)="toggleCheckbox()">
+
+        <div class="signup">
+            <form (ngSubmit)="signUpSubmit()" [formGroup]="signUpForm">
+                <label for="chk" aria-hidden="true">Sign up</label>
+                <input type="text" name="txt" placeholder="First name" formControlName="first">
+
+                <input type="text" name="txt" placeholder="Last name" formControlName="last">
+                <input type="email" name="email" placeholder="Email" formControlName="email">
+                <input type="password" name="pswd" placeholder="Password" formControlName="password">
+                <button type="submit" [disabled]="signUpForm.invalid">Sign up</button>
+            </form>
+        </div>
+
+        <div class="login">
+            <form (ngSubmit)="signInSubmit()" [formGroup]="signInForm">
+                <label for="chk" aria-hidden="true">Login</label>
+                <input type="email" name="email" placeholder="Email" formControlName="email">
+                <input type="password" name="pswd" placeholder="Password" formControlName="password">
+                <button type="submit" [disabled]="signInForm.invalid">Login</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+GET http://localhost:3000/desires?status=CreatedByUser
+Authorization: Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGIxZTc5OTNkMzhhMTFmMDRiYWRhMjEiLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1LmVkdSIsImZ1bGxuYW1lIjoiSGFuIFR1biBaYXciLCJpYXQiOjE2ODk3MTg5NzJ9.7k1t4XI8_xX4aqek45-a18JW_xSxr61Oe_4hWer1IJA
+
+
+###
+GET http://localhost:3000/desires/64b2d01b3b09b9d7fb45762f
+
+###
+GET http://localhost:3000/desires/64b2d01b3b09b9d7fb45762f/test
+Authorization: Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGIyY2Y4N2IyOGRjYWUyOWJkNjIzNWEiLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1LmVkdSIsImZ1bGxuYW1lIjoiSGFuIFR1biBaYXciLCJpYXQiOjE2ODk0NDAxMzh9.dAhVMM09peSa3tp05Cv0NAwIWJRDgsM-vpEQ6Y4fs30
+
+###
+POST http://localhost:3000/desires
+Authorization: Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGIyY2Y4N2IyOGRjYWUyOWJkNjIzNWEiLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1LmVkdSIsImZ1bGxuYW1lIjoiSGFuIFR1biBaYXciLCJpYXQiOjE2ODk0NDAxMzh9.dAhVMM09peSa3tp05Cv0NAwIWJRDgsM-vpEQ6Y4fs30
+Content-Type: application/json
+
+ {
+    "category": "Test",
+    "title": "Request 1",
+    "description": "Test description 2",
+    "address": "Test address",
+    "contactInfo": "01234567",
+    "estimateInHours": 1,
+    "numberOfVolunteerNeeded": 2,
+    "requestTime": "2023-07-15T16:33:19.248+00:00"
+
+ }
+
+###
+PUT http://localhost:3000/desires/64b2d01b3b09b9d7fb45762f
+Authorization: Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGIyY2Y4N2IyOGRjYWUyOWJkNjIzNWEiLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1LmVkdSIsImZ1bGxuYW1lIjoiSGFuIFR1biBaYXciLCJpYXQiOjE2ODk0NDAxMzh9.dAhVMM09peSa3tp05Cv0NAwIWJRDgsM-vpEQ6Y4fs30
+Content-Type: application/json
+
+ {
+   "description": "64b2ce5cc5a950b6a1410e6c"
+ }
+
+
+
+###
+DELETE http://localhost:3000/desires/64b2d01b3b09b9d7fb45762f
+Authorization: Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGIyY2Y4N2IyOGRjYWUyOWJkNjIzNWEiLCJlbWFpbCI6ImhhbnR1bi56YXdAbWl1LmVkdSIsImZ1bGxuYW1lIjoiSGFuIFR1biBaYXciLCJpYXQiOjE2ODk0NDAxMzh9.dAhVMM09peSa3tp05Cv0NAwIWJRDgsM-vpEQ6Y4fs30
